@@ -4,8 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class RegisterForm extends StatefulWidget {
-  const RegisterForm({Key? key}) : super(key: key);
-
+  const RegisterForm({required this.onTap, Key? key}) : super(key: key);
+  final Function onTap;
   @override
   State<RegisterForm> createState() => _RegisterFormState();
 }
@@ -109,6 +109,8 @@ class _RegisterFormState extends State<RegisterForm> {
         registerResponse.user!.sendEmailVerification();
         setState(() {
           loading = false;
+          widget.onTap();
+          Navigator.of(context).pop();
         });
       } catch (e) {
         setState(() {

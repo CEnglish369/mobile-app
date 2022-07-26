@@ -21,7 +21,7 @@ class _CreateState extends State<CreateConversationsPage> {
             ? []
             : [
                 IconButton(
-                    onPressed: createConvo, icon: const Icon(Icons.check))
+                    onPressed: createConvo, icon: const Icon(Icons.check)),
               ],
       ),
       body: ListView.builder(

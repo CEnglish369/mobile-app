@@ -2,11 +2,11 @@ import 'package:timelineapp/forms/postform.dart';
 import 'package:timelineapp/model/post.dart';
 import 'package:timelineapp/pages/authentication.dart';
 import 'package:timelineapp/pages/conversations.dart';
+import 'package:timelineapp/pages/profile.dart';
 import 'package:timelineapp/services/firestore_service.dart';
 import 'package:timelineapp/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'Chat/ChatList.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -27,16 +27,17 @@ class _HomeState extends State<HomePage> {
             IconButton(
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const ConversationPage()));
+                      builder: (context) => const ConversationsPage()));
                 },
                 icon: const Icon(Icons.message)),
+            IconButton(onPressed: () {}, icon: const Icon(Icons.account_box)),
             IconButton(
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => const Authentication()));
                   FirebaseAuth.instance.signOut();
                 },
-                icon: const Icon(Icons.settings))
+                icon: const Icon(Icons.exit_to_app))
           ],
         ),
         floatingActionButton: FloatingActionButton(
@@ -64,7 +65,15 @@ class _HomeState extends State<HomePage> {
                       itemBuilder: (BuildContext context, int index) =>
                           ListTile(
                               title: GestureDetector(
-                                  onTap: () {},
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => ProfilePage(
+                                                observedUser: FirestoreService
+                                                        .userMap[
+                                                    posts[index].creator]!)));
+                                  },
                                   child: Text(FirestoreService.userMap
                                           .containsKey(posts[index].creator)
                                       ? FirestoreService

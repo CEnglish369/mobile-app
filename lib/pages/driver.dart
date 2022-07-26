@@ -2,7 +2,6 @@ import 'package:timelineapp/pages/authentication.dart';
 import 'package:timelineapp/pages/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'Chat/ChatList.dart';
 
 class Driver extends StatefulWidget {
   const Driver({Key? key}) : super(key: key);

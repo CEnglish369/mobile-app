@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import '../widgets/loading.dart';
 
 class LoginForm extends StatefulWidget {
-  const LoginForm({Key? key}) : super(key: key);
-
+  const LoginForm({required this.onTap, Key? key}) : super(key: key);
+  final Function onTap;
   @override
   State<LoginForm> createState() => _LoginFormState();
 }
@@ -61,6 +61,7 @@ class _LoginFormState extends State<LoginForm> {
                       onPressed: () {
                         setState(() {
                           loading = true;
+                          widget.onTap;
                           login(context);
                         });
                       },
@@ -71,9 +72,7 @@ class _LoginFormState extends State<LoginForm> {
                       },
                       child: const Text("Forgot Password")),
                   OutlinedButton(
-                      onPressed: () {
-                        register();
-                      },
+                      onPressed: showRegistration,
                       child: const Text("Register")),
                 ],
               ),
@@ -114,10 +113,20 @@ class _LoginFormState extends State<LoginForm> {
     }
   }
 
-  Future<void> register() async {
-    if (_email.text.isEmpty && _password.text.isEmpty) {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (BuildContext context) => RegisterForm()));
-    }
+  void showRegistration() {
+    showModalBottomSheet<void>(
+        context: context,
+        builder: (BuildContext context) {
+          return Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: RegisterForm(onTap: widget.onTap));
+        });
   }
+
+  // Future<void> register() async {
+  //   if (_email.text.isEmpty && _password.text.isEmpty) {
+  //     Navigator.push(context,
+  //         MaterialPageRoute(builder: (BuildContext context) => RegisterForm()));
+  //   }
+  // }
 }
